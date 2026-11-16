@@ -1,385 +1,196 @@
-<!DOCTYPE html><html lang="bn">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>APK Maker Pro</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APK Builder Pro</title>
+<style>
 *{box-sizing:border-box}
-
 body{
- margin:0;
- background:#080c18;
- color:#fff;
- font-family:Arial,sans-serif;
+ margin:0;padding:20px;
+ background:#080d19;color:white;
+ font-family:Arial,sans-serif
 }
-
-header{
- padding:25px 15px;
- text-align:center;
- background:linear-gradient(120deg,#681cff,#087ff5);
+.container{max-width:520px;margin:auto}
+.header{text-align:center;padding:20px}
+.header h1{
+ background:linear-gradient(90deg,#00e5ff,#a855f7);
+ background-clip:text;color:transparent;font-size:30px
 }
-
-header h1{margin:0;font-size:27px}
-header p{color:#e4e4e4;margin-bottom:0}
-
-.container{
- max-width:750px;
- margin:auto;
- padding:15px;
-}
-
 .card{
- background:#121a2d;
- border:1px solid #263653;
- border-radius:17px;
- padding:18px;
- margin-bottom:17px;
+ background:#131d30;border:1px solid #293750;
+ border-radius:17px;padding:20px;margin-bottom:17px
 }
-
-.card h3{
- color:#70aaff;
- margin-top:0;
- font-size:19px;
+label{display:block;margin:15px 0 7px;color:#b8c8df}
+input{
+ width:100%;padding:14px;border-radius:10px;
+ border:1px solid #35445f;background:#091222;
+ color:white;font-size:15px;outline:none
 }
-
-label{
- display:block;
- margin:15px 0 8px;
- color:#dce5f5;
- font-size:14px;
-}
-
-input,textarea,select{
- width:100%;
- padding:13px;
- border-radius:10px;
- border:1px solid #344663;
- background:#080f20;
- color:white;
- outline:none;
- font-size:14px;
-}
-
-textarea{
- min-height:140px;
- resize:vertical;
-}
-
-input:focus,textarea:focus,select:focus{
- border-color:#388cff;
-}
-
-.permissions{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.permission{
- display:flex;
- align-items:center;
- gap:8px;
- background:#0b1324;
- border:1px solid #243653;
- border-radius:9px;
- padding:12px;
- font-size:13px;
-}
-
-.permission input{
- width:17px;
- height:17px;
- accent-color:#7045ff;
-}
-
 button{
- width:100%;
- border:0;
- padding:15px;
- border-radius:11px;
- background:linear-gradient(100deg,#762bff,#078bea);
- color:white;
- font-size:16px;
- font-weight:bold;
- margin-top:12px;
- cursor:pointer;
+ width:100%;padding:16px;border:0;border-radius:12px;
+ background:linear-gradient(90deg,#00c6ff,#8b5cf6);
+ color:white;font-size:17px;font-weight:bold;
+ margin-top:20px
 }
-
-button:active{opacity:.8}
-
-.secondary{
- background:#202e48;
+button:disabled{opacity:.5}
+.status{
+ background:#091222;padding:15px;border-radius:10px;
+ margin-top:15px;white-space:pre-wrap;word-break:break-word
 }
+.small{color:#94a3b8;font-size:13px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="container">
 
-.preview{
- width:90px;
- height:90px;
- border-radius:20px;
- object-fit:cover;
- display:none;
- margin-top:12px;
- border:2px solid #657bff;
-}
+ <div class="header">
+  <h1>APK BUILDER PRO</h1>
+  <p>Website to Android APK</p>
+ </div>
 
-.note{
- color:#9cabc4;
- font-size:12px;
- line-height:1.7;
-}
+ <div class="card">
+  <h2>App Configuration</h2>
 
-#status{
- color:#5ce7ad;
- text-align:center;
- word-break:break-word;
-}
+  <label>App Name</label>
+  <input id="appName" placeholder="My Android App">
 
-footer{
- text-align:center;
- padding:25px;
- color:#71819c;
- font-size:12px;
-}
-</style></head><body><header>
-<h1>⚡ APK MAKER PRO</h1>
-<p>Build Your Own Android Application</p>
-</header><div class="container"><!-- SOURCE --><div class="card">
-<h3>🌐 Application Source</h3><label>Build Type</label>
-<select id="buildType" onchange="changeType()">
+  <label>Package Name</label>
+  <input id="packageName" value="com.example.myapp">
 
-<option value="url">Website URL</option>
-<option value="html">HTML / CSS / JS</option>
-</select><div id="urlBox">
-<label>Website URL</label>
-<input id="websiteUrl" placeholder="https://example.com">
-</div><div id="htmlBox" style="display:none">
-<label>HTML Code</label>
-<textarea id="htmlCode" placeholder="Paste your complete HTML code here"></textarea><label>HTML File Upload</label>
-<input type="file" id="htmlFile" accept=".html,.htm">
+  <label>Website URL</label>
+  <input id="websiteUrl" type="url" placeholder="https://example.com">
+
+  <label>Version Name</label>
+  <input id="versionName" value="1.0">
+
+  <label>Version Code</label>
+  <input id="versionCode" type="number" value="1" min="1">
+
+  <button id="buildButton" onclick="buildAPK()">BUILD APK</button>
+
+  <div class="status" id="status">Ready to build your APK.</div>
+ </div>
+
+ <div class="card">
+  <h3>Build Information</h3>
+  <p class="small">
+   ১. App Name এবং Package Name লিখুন।<br>
+   ২. Website URL দিন।<br>
+   ৩. BUILD APK চাপুন।<br>
+   ৪. Build শেষ হলে APK ডাউনলোড করুন।
+  </p>
+ </div>
 
 </div>
-</div><!-- APP INFO --><div class="card">
-<h3>📱 Application Information</h3><label>Application Name</label>
-<input id="appName" placeholder="My Application">
 
-<label>Package Name</label>
-<input id="packageName" placeholder="com.example.myapp">
+<script>
+const WORKER_URL = "YOUR_CLOUDFLARE_WORKER_URL";
 
-<label>Version Name</label>
-<input id="versionName" value="1.0">
+let checking = false;
 
-<label>Version Code</label>
-<input id="versionCode" type="number" value="1" min="1">
-
-<label>Application Icon</label>
-<input type="file" id="appIcon" accept="image/png,image/jpeg,image/webp">
-
-<img id="iconPreview" class="preview"></div><!-- PERMISSIONS --><div class="card">
-<h3>🔐 Android Permissions</h3><div class="permissions"><label class="permission">
-<input type="checkbox" value="INTERNET" checked> Internet
-</label><label class="permission">
-<input type="checkbox" value="ACCESS_FINE_LOCATION"> Location
-</label><label class="permission">
-<input type="checkbox" value="RECORD_AUDIO"> Microphone
-</label><label class="permission">
-<input type="checkbox" value="CAMERA"> Camera
-</label><label class="permission">
-<input type="checkbox" value="READ_CONTACTS"> Contacts
-</label><label class="permission">
-<input type="checkbox" value="POST_NOTIFICATIONS"> Notifications
-</label><label class="permission">
-<input type="checkbox" value="VIBRATE"> Vibration
-</label><label class="permission">
-<input type="checkbox" value="BLUETOOTH_CONNECT"> Bluetooth
-</label><label class="permission">
-<input type="checkbox" value="READ_MEDIA_IMAGES"> Images
-</label><label class="permission">
-<input type="checkbox" value="READ_MEDIA_VIDEO"> Videos
-</label><label class="permission">
-<input type="checkbox" value="READ_MEDIA_AUDIO"> Audio
-</label><label class="permission">
-<input type="checkbox" value="ACCESS_COARSE_LOCATION"> Approx Location
-</label><label class="permission">
-<input type="checkbox" value="SYSTEM_ALERT_WINDOW"> Display Over Apps
-</label><label class="permission">
-<input type="checkbox" value="ACCESS_BACKGROUND_LOCATION"> Background Location
-</label></div><p class="note">
-বিশেষ Android Permission-এর জন্য অ্যাপ ইনস্টল করার পর ব্যবহারকারীর অনুমতি এবং কিছু ক্ষেত্রে Settings থেকে আলাদাভাবে অনুমতি দিতে হবে।
-</p>
-</div><!-- SETTINGS --><div class="card">
-<h3>⚙️ Application Settings</h3><label>Screen Orientation</label>
-<select id="orientation">
-
-<option value="portrait">Portrait</option>
-<option value="landscape">Landscape</option>
-<option value="unspecified">Auto Rotate</option>
-</select><label>Display Mode</label>
-<select id="displayMode">
-
-<option value="normal">Normal</option>
-<option value="fullscreen">Full Screen</option>
-</select><label>Status Bar</label>
-<select id="statusBar">
-
-<option value="show">Show</option>
-<option value="hide">Hide</option>
-</select><label>Screen Theme</label>
-<select id="theme">
-
-<option value="light">Light</option>
-<option value="dark">Dark</option>
-</select></div><!-- BUILD --><div class="card">
-<h3>🚀 Build Your APK</h3><p class="note">
-আপনার অ্যাপের তথ্য Build Configuration হিসেবে সংরক্ষণ করুন। পরবর্তী ধাপে GitHub Android Build System-এর সঙ্গে যুক্ত করা হবে।
-</p><button onclick="prepareBuild()">⚡ PREPARE APK BUILD</button>
-
-<button class="secondary" onclick="downloadConfig()">DOWNLOAD CONFIGURATION</button>
-
-<p id="status"></p>
-</div></div><footer>
-APK MAKER PRO V2<br>
-Online Android Application Builder
-</footer><script>
-
-function changeType(){
-
- const type=document.getElementById("buildType").value;
-
- document.getElementById("urlBox").style.display=
- type==="url"?"block":"none";
-
- document.getElementById("htmlBox").style.display=
- type==="html"?"block":"none";
+function showStatus(message){
+ document.getElementById("status").textContent=message;
 }
 
-document.getElementById("appIcon").addEventListener("change",function(){
+async function buildAPK(){
 
- const file=this.files[0];
+ if(checking)return;
 
- if(file){
-  const reader=new FileReader();
+ const appName=document.getElementById("appName").value.trim();
+ const packageName=document.getElementById("packageName").value.trim();
+ const websiteUrl=document.getElementById("websiteUrl").value.trim();
+ const versionName=document.getElementById("versionName").value.trim();
+ const versionCode=Number(document.getElementById("versionCode").value);
 
-  reader.onload=function(e){
-   const img=document.getElementById("iconPreview");
-   img.src=e.target.result;
-   img.style.display="block";
-  };
-
-  reader.readAsDataURL(file);
- }
-
-});
-
-let configuration=null;
-
-async function prepareBuild(){
-
- const type=document.getElementById("buildType").value;
- const name=document.getElementById("appName").value.trim();
- const pkg=document.getElementById("packageName").value.trim();
-
- if(!name || !pkg){
-  alert("Application Name এবং Package Name দিন");
+ if(!appName || !packageName || !websiteUrl){
+  showStatus("সব তথ্য পূরণ করুন।");
   return;
  }
 
- if(!/^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)+$/.test(pkg)){
-  alert("সঠিক Package Name লিখুন");
+ if(!/^https:\/\//i.test(websiteUrl)){
+  showStatus("সঠিক HTTPS Website URL দিন।");
   return;
  }
 
- let source="";
-
- if(type==="url"){
-
-  source=document.getElementById("websiteUrl").value.trim();
-
-  try{
-   const u=new URL(source);
-   if(!["http:","https:"].includes(u.protocol)) throw Error();
-  }catch(e){
-   alert("সঠিক Website URL দিন");
-   return;
-  }
-
- }else{
-
-  source=document.getElementById("htmlCode").value;
-
-  const file=document.getElementById("htmlFile").files[0];
-
-  if(file){
-   source=await file.text();
-  }
-
-  if(!source.trim()){
-   alert("HTML Code অথবা HTML File দিন");
-   return;
-  }
-
+ if(!/^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)+$/.test(packageName)){
+  showStatus("সঠিক Package Name দিন। উদাহরণ: com.example.app");
+  return;
  }
 
- const permissions=[
- ...document.querySelectorAll(".permission input:checked")
- ].map(x=>x.value);
+ if(!Number.isInteger(versionCode)||versionCode<1){
+  showStatus("সঠিক Version Code দিন।");
+  return;
+ }
 
- const iconFile=document.getElementById("appIcon").files[0];
+ if(WORKER_URL==="YOUR_CLOUDFLARE_WORKER_URL"){
+  showStatus("Backend এখনো সেটআপ করা হয়নি। পরের ধাপে Backend যুক্ত করতে হবে।");
+  return;
+ }
 
- let icon="";
+ const button=document.getElementById("buildButton");
+ button.disabled=true;
+ checking=true;
 
- if(iconFile){
-  icon=await new Promise(resolve=>{
-   const reader=new FileReader();
-   reader.onload=e=>resolve(e.target.result);
-   reader.readAsDataURL(iconFile);
+ try{
+  showStatus("APK Build শুরু হচ্ছে...");
+
+  const response=await fetch(WORKER_URL+"/build",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({
+    appName,
+    packageName,
+    websiteUrl,
+    versionName,
+    versionCode
+   })
   });
+
+  const result=await response.json();
+
+  if(!response.ok||!result.runId){
+   throw new Error(result.error||"Build শুরু করা যায়নি।");
+  }
+
+  showStatus("Build শুরু হয়েছে। অপেক্ষা করুন...");
+  await checkBuild(result.runId);
+
+ }catch(error){
+  showStatus("সমস্যা: "+error.message);
+ }finally{
+  button.disabled=false;
+  checking=false;
  }
-
- configuration={
-  appName:name,
-  packageName:pkg,
-  versionName:document.getElementById("versionName").value,
-  versionCode:document.getElementById("versionCode").value,
-  sourceType:type,
-  source:source,
-  icon:icon,
-  permissions:permissions,
-  orientation:document.getElementById("orientation").value,
-  displayMode:document.getElementById("displayMode").value,
-  statusBar:document.getElementById("statusBar").value,
-  theme:document.getElementById("theme").value
- };
-
- localStorage.setItem("apkMakerConfig",JSON.stringify(configuration));
-
- document.getElementById("status").innerText=
- "✓ Configuration প্রস্তুত হয়েছে। এখন Download Configuration চাপুন।";
-
 }
 
-function downloadConfig(){
+async function checkBuild(runId){
 
- if(!configuration){
-  alert("প্রথমে PREPARE APK BUILD চাপুন");
-  return;
+ for(let i=0;i<120;i++){
+
+  await new Promise(resolve=>setTimeout(resolve,10000));
+
+  const response=await fetch(
+   WORKER_URL+"/status?runId="+encodeURIComponent(runId)
+  );
+
+  const result=await response.json();
+
+  if(result.status==="completed"&&result.downloadUrl){
+   showStatus("APK তৈরি সম্পন্ন হয়েছে!\n\nডাউনলোড লিংক:\n"+result.downloadUrl);
+   return;
+  }
+
+  if(result.status==="failed"){
+   showStatus("APK তৈরি করা যায়নি। Build Logs পরীক্ষা করতে হবে।");
+   return;
+  }
+
+  showStatus("APK তৈরি হচ্ছে...\nStatus: "+(result.status||"Waiting"));
  }
 
- const blob=new Blob(
- [JSON.stringify(configuration,null,2)],
- {type:"application/json"}
- );
-
- const url=URL.createObjectURL(blob);
-
- const a=document.createElement("a");
- a.href=url;
- a.download="apk-build-config.json";
- a.click();
-
- URL.revokeObjectURL(url);
-
- document.getElementById("status").innerText=
- "✓ Configuration Download হয়েছে।";
-
+ showStatus("সময় বেশি লাগছে। পরে Build Status পরীক্ষা করুন।");
 }
-
-</script></body>
-                 </html>
+</script>
+</body>
+</html>
