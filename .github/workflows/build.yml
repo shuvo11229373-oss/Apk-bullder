@@ -97,7 +97,6 @@ jobs:
           python3 - <<'PY'
           import os
           import re
-          import shutil
           from xml.sax.saxutils import escape
           from PIL import Image, ImageDraw, ImageFont
 
@@ -240,34 +239,41 @@ jobs:
           with open("app/src/main/AndroidManifest.xml", "w") as f:
               f.write(manifest)
 
-          # Create launcher icon from uploaded logo or app initial.
+          # Create transparent logo
           if logo_path:
               if not logo_path.startswith("uploads/logo-"):
                   raise SystemExit("Invalid logo path")
+
               if not os.path.isfile(logo_path):
                   raise SystemExit("Uploaded logo file not found")
+
               source = Image.open(logo_path).convert("RGBA")
+
           else:
               source = Image.new("RGBA", (512, 512), (0, 0, 0, 0))
               draw = ImageDraw.Draw(source)
               letter = (name[:1] or "A").upper()
+
               try:
                   font = ImageFont.truetype(
                       "DejaVuSans-Bold.ttf", 270
                   )
               except:
                   font = ImageFont.load_default()
+
               box = draw.textbbox((0, 0), letter, font=font)
               x = (512 - (box[2] - box[0])) / 2
               y = (512 - (box[3] - box[1])) / 2 - box[1]
               draw.text((x, y), letter, fill="white", font=font)
 
-          # Fit the logo inside the Android adaptive icon safe area.
-          source.thumbnail((360, 360), Image.Resampling.LANCZOS)
+          # Preserve transparency and fit the complete logo
+          source.thumbnail((512, 512), Image.Resampling.LANCZOS)
 
           foreground = Image.new("RGBA", (512, 512), (0, 0, 0, 0))
+
           x = (512 - source.width) // 2
           y = (512 - source.height) // 2
+
           foreground.alpha_composite(source, (x, y))
 
           densities = [
@@ -282,24 +288,26 @@ jobs:
               path = f"app/src/main/res/mipmap-{folder}"
               os.makedirs(path, exist_ok=True)
 
-              legacy = Image.new(
-                  "RGBA", (size, size),
-                  tuple(bytes.fromhex(bg_color[1:])) + (255,)
-              )
+              # Transparent legacy launcher icon
               icon = foreground.resize(
                   (size, size), Image.Resampling.LANCZOS
               )
-              legacy.alpha_composite(icon)
 
-              legacy.save(f"{path}/ic_launcher.png")
-              icon.save(f"{path}/ic_launcher_foreground.png")
+              icon.save(
+                  f"{path}/ic_launcher.png"
+              )
 
+              icon.save(
+                  f"{path}/ic_launcher_foreground.png"
+              )
+
+          # Transparent adaptive icon background
           with open(
               "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml", "w"
           ) as f:
               f.write("""
           <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-              <background android:drawable="@color/app_background"/>
+              <background android:drawable="@android:color/transparent"/>
               <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
           </adaptive-icon>
           """)
@@ -317,7 +325,6 @@ jobs:
           import android.webkit.WebChromeClient;
           import android.webkit.PermissionRequest;
           import android.webkit.WebSettings;
-          import android.view.View;
           import android.widget.Toast;
 
           public class MainActivity extends Activity {{
