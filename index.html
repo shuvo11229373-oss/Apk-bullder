@@ -2,194 +2,438 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b18">
 <title>APK Builder Pro</title>
+
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
- margin:0;padding:20px;
- background:#080d19;color:white;
- font-family:Arial,sans-serif
+  font-family:Arial,sans-serif;
+  background:radial-gradient(circle at top,#25265b,#0b1020 55%,#070912);
+  color:#fff;min-height:100vh;padding:20px 12px;
 }
-.container{max-width:520px;margin:auto}
-.header{text-align:center;padding:20px}
-.header h1{
- background:linear-gradient(90deg,#00e5ff,#a855f7);
- background-clip:text;color:transparent;font-size:30px
+.container{max-width:540px;margin:auto}
+.header{text-align:center;padding:25px 10px}
+.logo{
+  width:68px;height:68px;margin:auto auto 14px;
+  display:grid;place-items:center;border-radius:22px;
+  background:linear-gradient(135deg,#7c5cff,#00d4ff);
+  font-size:30px;font-weight:bold;
+  box-shadow:0 10px 35px #6655ff55;
 }
+h1{font-size:27px;letter-spacing:.5px}
+.header p{color:#aeb7d2;margin-top:9px;font-size:13px}
 .card{
- background:#131d30;border:1px solid #293750;
- border-radius:17px;padding:20px;margin-bottom:17px
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;padding:21px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 45px #0005;
 }
-label{display:block;margin:15px 0 7px;color:#b8c8df}
-input{
- width:100%;padding:14px;border-radius:10px;
- border:1px solid #35445f;background:#091222;
- color:white;font-size:15px;outline:none
+.section-title{
+  font-size:15px;color:#a99aff;
+  margin:19px 0 13px;font-weight:bold;
 }
+.section-title:first-child{margin-top:0}
+.field{margin-bottom:14px}
+label{display:block;font-size:13px;color:#c9d0e7;margin-bottom:7px}
+input[type=text],input[type=url],input[type=number]{
+  width:100%;padding:14px 13px;border-radius:12px;
+  background:#11182b;border:1px solid #303b59;
+  color:white;outline:none;font-size:14px;
+}
+input:focus{border-color:#8a70ff;box-shadow:0 0 0 2px #8a70ff22}
+input::placeholder{color:#73809e}
+.logo-upload{
+  border:1px dashed #7166b9;border-radius:15px;
+  padding:18px;text-align:center;background:#171b34;
+}
+.logo-upload input{max-width:100%;margin-top:12px;color:#bfc8df}
+.preview{
+  width:100px;height:100px;object-fit:cover;
+  border-radius:22px;margin:13px auto 0;display:none;
+  border:2px solid #8c7aff;
+}
+.permissions{display:flex;gap:10px;flex-wrap:wrap}
+.permission{
+  flex:1;min-width:130px;padding:14px;
+  background:#151c32;border:1px solid #303b59;
+  border-radius:13px;font-size:13px;
+}
+.permission input{accent-color:#8a70ff;margin-right:7px}
+.color-row{display:flex;align-items:center;gap:13px}
+input[type=color]{
+  width:55px;height:43px;border:0;background:none;
+  cursor:pointer;
+}
+.color-value{font-size:13px;color:#cbd2e7}
 button{
- width:100%;padding:16px;border:0;border-radius:12px;
- background:linear-gradient(90deg,#00c6ff,#8b5cf6);
- color:white;font-size:17px;font-weight:bold;
- margin-top:20px
+  width:100%;border:0;border-radius:14px;
+  padding:16px;font-size:15px;font-weight:bold;
+  cursor:pointer;color:white;
+  background:linear-gradient(100deg,#7655ff,#00aeea);
+  box-shadow:0 8px 25px #6355ff40;
 }
-button:disabled{opacity:.5}
-.status{
- background:#091222;padding:15px;border-radius:10px;
- margin-top:15px;white-space:pre-wrap;word-break:break-word
+button:disabled{opacity:.5;cursor:not-allowed}
+.build-btn{margin-top:20px}
+.status-box{
+  display:none;margin-top:20px;padding:17px;
+  border-radius:14px;background:#11182b;
+  border:1px solid #303b59;
 }
-.small{color:#94a3b8;font-size:13px;line-height:1.6}
+.status-text{text-align:center;font-size:14px;margin-bottom:13px}
+.progress-bg{height:9px;background:#303751;border-radius:20px;overflow:hidden}
+.progress{
+  width:0;height:100%;border-radius:20px;
+  background:linear-gradient(90deg,#795cff,#00d4ff);
+  transition:width .5s;
+}
+.percent{text-align:center;font-size:12px;color:#aab4d0;margin-top:8px}
+.download-btn{
+  display:none;margin-top:15px;
+  background:linear-gradient(100deg,#00b879,#00a7c9);
+}
+.message{
+  display:none;margin-top:14px;padding:12px;
+  border-radius:10px;font-size:13px;line-height:1.6;
+  background:#29203b;color:#ffd5e1;word-break:break-word;
+}
+.footer{text-align:center;color:#727e9e;font-size:11px;margin:20px 0}
+.small{font-size:11px;color:#8995b2;margin-top:7px;line-height:1.5}
 </style>
 </head>
+
 <body>
 <div class="container">
 
- <div class="header">
-  <h1>APK BUILDER PRO</h1>
-  <p>Website to Android APK</p>
- </div>
+  <div class="header">
+    <div class="logo">APK</div>
+    <h1>APK Builder Pro</h1>
+    <p>Create your Android app from any website</p>
+  </div>
 
- <div class="card">
-  <h2>App Configuration</h2>
+  <div class="card">
 
-  <label>App Name</label>
-  <input id="appName" placeholder="My Android App">
+    <div class="section-title">01 · App Information</div>
 
-  <label>Package Name</label>
-  <input id="packageName" value="com.example.myapp">
+    <div class="field">
+      <label>App Name</label>
+      <input id="appName" type="text" placeholder="My Awesome App">
+    </div>
 
-  <label>Website URL</label>
-  <input id="websiteUrl" type="url" placeholder="https://example.com">
+    <div class="field">
+      <label>Package Name</label>
+      <input id="packageName" type="text" placeholder="com.example.myapp">
+    </div>
 
-  <label>Version Name</label>
-  <input id="versionName" value="1.0">
+    <div class="field">
+      <label>Website URL (HTTPS)</label>
+      <input id="websiteUrl" type="url" placeholder="https://example.com">
+    </div>
 
-  <label>Version Code</label>
-  <input id="versionCode" type="number" value="1" min="1">
+    <div class="section-title">02 · App Version</div>
 
-  <button id="buildButton" onclick="buildAPK()">BUILD APK</button>
+    <div class="field">
+      <label>Version Name</label>
+      <input id="versionName" type="text" value="1.0">
+    </div>
 
-  <div class="status" id="status">Ready to build your APK.</div>
- </div>
+    <div class="field">
+      <label>Version Code</label>
+      <input id="versionCode" type="number" min="1" value="1">
+    </div>
 
- <div class="card">
-  <h3>Build Information</h3>
-  <p class="small">
-   ১. App Name এবং Package Name লিখুন।<br>
-   ২. Website URL দিন।<br>
-   ৩. BUILD APK চাপুন।<br>
-   ৪. Build শেষ হলে APK ডাউনলোড করুন।
-  </p>
- </div>
+    <div class="section-title">03 · App Logo</div>
+
+    <div class="logo-upload">
+      <div>আপনার অ্যাপের Logo নির্বাচন করুন</div>
+      <input id="logo" type="file" accept="image/png,image/jpeg,image/webp">
+      <img id="preview" class="preview" alt="Logo Preview">
+      <div class="small">PNG, JPG অথবা WebP · সর্বোচ্চ 2 MB</div>
+    </div>
+
+    <div class="section-title">04 · Permissions</div>
+
+    <div class="permissions">
+      <label class="permission">
+        <input type="checkbox" checked disabled>
+        Internet
+      </label>
+
+      <label class="permission">
+        <input id="microphone" type="checkbox">
+        Microphone
+      </label>
+    </div>
+
+    <div class="small">Internet Permission সবসময় চালু থাকবে। Microphone প্রয়োজন হলে নির্বাচন করুন।</div>
+
+    <div class="section-title">05 · Background Color</div>
+
+    <div class="color-row">
+      <input id="bgColor" type="color" value="#ffffff">
+      <span id="colorValue" class="color-value">#FFFFFF</span>
+    </div>
+
+    <button id="buildBtn" class="build-btn" onclick="startBuild()">
+      BUILD APK
+    </button>
+
+    <div id="statusBox" class="status-box">
+      <div id="statusText" class="status-text">Preparing build...</div>
+      <div class="progress-bg">
+        <div id="progress" class="progress"></div>
+      </div>
+      <div id="percent" class="percent">0%</div>
+    </div>
+
+    <button id="downloadBtn" class="download-btn" onclick="downloadZip()">
+      DOWNLOAD APK ZIP
+    </button>
+
+    <div id="message" class="message"></div>
+
+  </div>
+
+  <div class="footer">
+    APK BUILDER PRO · Powered by GitHub Actions
+  </div>
 
 </div>
 
 <script>
-const WORKER_URL = "https://dawn-hall-5a40apk-bullder-api.shuvo-f29.workers.dev";
+const WORKER_URL =
+"https://fragrant-fire-7646apkbullderpro.shuvo-f29.workers.dev";
 
+let currentRunId = null;
+let completed = false;
 let checking = false;
 
-function showStatus(message){
- document.getElementById("status").textContent=message;
+const $ = id => document.getElementById(id);
+
+$("logo").addEventListener("change", function(){
+  const file = this.files[0];
+  const preview = $("preview");
+
+  if(!file){
+    preview.style.display = "none";
+    return;
+  }
+
+  if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+    showMessage("শুধু PNG, JPG অথবা WebP ছবি নির্বাচন করুন।");
+    this.value = "";
+    preview.style.display = "none";
+    return;
+  }
+
+  if(file.size > 2*1024*1024){
+    showMessage("Logo সর্বোচ্চ 2 MB হতে পারবে।");
+    this.value = "";
+    preview.style.display = "none";
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+  hideMessage();
+});
+
+$("bgColor").addEventListener("input",function(){
+  $("colorValue").textContent = this.value.toUpperCase();
+});
+
+function showMessage(message){
+  $("message").textContent = message;
+  $("message").style.display = "block";
 }
 
-async function buildAPK(){
-
- if(checking)return;
-
- const appName=document.getElementById("appName").value.trim();
- const packageName=document.getElementById("packageName").value.trim();
- const websiteUrl=document.getElementById("websiteUrl").value.trim();
- const versionName=document.getElementById("versionName").value.trim();
- const versionCode=Number(document.getElementById("versionCode").value);
-
- if(!appName || !packageName || !websiteUrl){
-  showStatus("সব তথ্য পূরণ করুন।");
-  return;
- }
-
- if(!/^https:\/\//i.test(websiteUrl)){
-  showStatus("সঠিক HTTPS Website URL দিন।");
-  return;
- }
-
- if(!/^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)+$/.test(packageName)){
-  showStatus("সঠিক Package Name দিন। উদাহরণ: com.example.app");
-  return;
- }
-
- if(!Number.isInteger(versionCode)||versionCode<1){
-  showStatus("সঠিক Version Code দিন।");
-  return;
- }
-
- if(WORKER_URL==="YOUR_CLOUDFLARE_WORKER_URL"){
-  showStatus("Backend এখনো সেটআপ করা হয়নি। পরের ধাপে Backend যুক্ত করতে হবে।");
-  return;
- }
-
- const button=document.getElementById("buildButton");
- button.disabled=true;
- checking=true;
-
- try{
-  showStatus("APK Build শুরু হচ্ছে...");
-
-  const response=await fetch(WORKER_URL+"/build",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({
-    appName,
-    packageName,
-    websiteUrl,
-    versionName,
-    versionCode
-   })
-  });
-
-  const result=await response.json();
-
-  if(!response.ok||!result.runId){
-   throw new Error(result.error||"Build শুরু করা যায়নি।");
-  }
-
-  showStatus("Build শুরু হয়েছে। অপেক্ষা করুন...");
-  await checkBuild(result.runId);
-
- }catch(error){
-  showStatus("সমস্যা: "+error.message);
- }finally{
-  button.disabled=false;
-  checking=false;
- }
+function hideMessage(){
+  $("message").style.display = "none";
 }
 
-async function checkBuild(runId){
+function setProgress(value,text){
+  $("progress").style.width = value+"%";
+  $("percent").textContent = value+"%";
+  $("statusText").textContent = text;
+}
 
- for(let i=0;i<120;i++){
+async function startBuild(){
 
-  await new Promise(resolve=>setTimeout(resolve,10000));
+  if(checking) return;
 
-  const response=await fetch(
-   WORKER_URL+"/status?runId="+encodeURIComponent(runId)
-  );
+  const appName = $("appName").value.trim();
+  const packageName = $("packageName").value.trim();
+  const websiteUrl = $("websiteUrl").value.trim();
+  const versionName = $("versionName").value.trim();
+  const versionCode = $("versionCode").value.trim();
 
-  const result=await response.json();
-
-  if(result.status==="completed"&&result.downloadUrl){
-   showStatus("APK তৈরি সম্পন্ন হয়েছে!\n\nডাউনলোড লিংক:\n"+result.downloadUrl);
-   return;
+  if(!appName || !packageName || !websiteUrl){
+    showMessage("App Name, Package Name এবং Website URL পূরণ করুন।");
+    return;
   }
 
-  if(result.status==="failed"){
-   showStatus("APK তৈরি করা যায়নি। Build Logs পরীক্ষা করতে হবে।");
-   return;
+  if(!/^https:\/\/[^\s]+$/i.test(websiteUrl)){
+    showMessage("সঠিক HTTPS Website URL দিন।");
+    return;
   }
 
-  showStatus("APK তৈরি হচ্ছে...\nStatus: "+(result.status||"Waiting"));
- }
+  if(!/^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)+$/.test(packageName)){
+    showMessage("Package Name সঠিক নয়। যেমন: com.example.app");
+    return;
+  }
 
- showStatus("সময় বেশি লাগছে। পরে Build Status পরীক্ষা করুন।");
+  if(!Number.isInteger(Number(versionCode)) || Number(versionCode)<1){
+    showMessage("Version Code কমপক্ষে 1 হতে হবে।");
+    return;
+  }
+
+  const form = new FormData();
+  form.append("appName",appName);
+  form.append("packageName",packageName);
+  form.append("websiteUrl",websiteUrl);
+  form.append("versionName",versionName || "1.0");
+  form.append("versionCode",versionCode);
+  form.append("bgColor",$("bgColor").value);
+
+  const permissions = ["INTERNET"];
+  if($("microphone").checked) permissions.push("RECORD_AUDIO");
+
+  form.append("permissions",permissions.join(","));
+
+  const logo = $("logo").files[0];
+  if(logo) form.append("logo",logo);
+
+  checking = true;
+  completed = false;
+  currentRunId = null;
+
+  $("buildBtn").disabled = true;
+  $("downloadBtn").style.display = "none";
+  $("statusBox").style.display = "block";
+  hideMessage();
+  setProgress(5,"Uploading information...");
+
+  try{
+    const response = await fetch(WORKER_URL+"/build",{
+      method:"POST",
+      body:form
+    });
+
+    const result = await response.json();
+
+    if(!response.ok) throw new Error(result.error || "Build শুরু করা যায়নি।");
+
+    currentRunId = result.runId;
+
+    setProgress(10,"Build started. Waiting for GitHub...");
+
+    await checkStatus();
+
+  }catch(error){
+    showMessage(error.message);
+    $("buildBtn").disabled = false;
+    checking = false;
+  }
+}
+
+async function checkStatus(){
+
+  let attempts = 0;
+
+  while(attempts < 90){
+
+    attempts++;
+
+    try{
+      const response = await fetch(
+        WORKER_URL+"/status?runId="+encodeURIComponent(currentRunId),
+        {cache:"no-store"}
+      );
+
+      const data = await response.json();
+
+      if(!response.ok) throw new Error(data.error || "Status check failed");
+
+      if(data.status === "completed"){
+        completed = true;
+        checking = false;
+        setProgress(100,"APK তৈরি সম্পন্ন হয়েছে!");
+        $("downloadBtn").style.display = "block";
+        $("buildBtn").disabled = false;
+        return;
+      }
+
+      if(data.status === "failed"){
+        throw new Error("Build ব্যর্থ হয়েছে। GitHub Actions Build Log দেখুন।");
+      }
+
+      const percent = Math.min(15 + Math.floor(attempts/90*75),90);
+
+      let statusText = "Build চলছে...";
+      if(data.status === "queued") statusText = "Build Queue-তে আছে...";
+      if(data.status === "in_progress") statusText = "APK তৈরি হচ্ছে...";
+
+      setProgress(percent,statusText);
+
+    }catch(error){
+      checking = false;
+      $("buildBtn").disabled = false;
+      showMessage(error.message);
+      return;
+    }
+
+    await new Promise(resolve=>setTimeout(resolve,10000));
+  }
+
+  checking = false;
+  $("buildBtn").disabled = false;
+  showMessage("অনেক সময় হয়ে গেছে। পরে আবার Status পরীক্ষা করুন।");
+}
+
+async function downloadZip(){
+
+  if(!currentRunId || !completed){
+    showMessage("APK Build সম্পন্ন হয়নি।");
+    return;
+  }
+
+  const button = $("downloadBtn");
+  button.disabled = true;
+  button.textContent = "DOWNLOADING...";
+
+  try{
+    const response = await fetch(
+      WORKER_URL+"/download?runId="+encodeURIComponent(currentRunId)
+    );
+
+    if(!response.ok){
+      let error = {};
+      try{ error = await response.json(); }catch(e){}
+      throw new Error(error.error || "ZIP Download করা যায়নি।");
+    }
+
+    const blob = await response.blob();
+
+    const downloadUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = downloadUrl;
+    a.download = "APK-Download.zip";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(()=>URL.revokeObjectURL(downloadUrl),60000);
+
+    button.textContent = "DOWNLOAD AGAIN";
+
+  }catch(error){
+    showMessage(error.message);
+    button.textContent = "DOWNLOAD APK ZIP";
+  }finally{
+    button.disabled = false;
+  }
 }
 </script>
 </body>
