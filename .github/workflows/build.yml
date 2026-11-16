@@ -7,16 +7,17 @@ on:
         description: App Name
         required: true
         default: My App
-
+        type: string
       package_name:
         description: Package Name
         required: true
         default: com.example.myapp
-
+        type: string
       website_url:
         description: Website URL
         required: true
         default: https://example.com
+        type: string
 
 jobs:
   build:
@@ -32,12 +33,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Android
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Install SDK
-        run: |
-          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -53,6 +52,7 @@ jobs:
           python3 - <<'PY'
           import os
           import re
+          from xml.sax.saxutils import escape
 
           name = os.environ["APP_NAME"]
           package = os.environ["PACKAGE_NAME"]
@@ -61,8 +61,8 @@ jobs:
           if not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z][A-Za-z0-9_]*)+', package):
               raise SystemExit("Invalid package name")
 
-          if not url.startswith(("https://", "http://")):
-              raise SystemExit("Invalid URL")
+          if not url.startswith("https://"):
+              raise SystemExit("HTTPS URL required")
 
           os.makedirs("app/src/main/res/values", exist_ok=True)
 
@@ -116,8 +116,6 @@ jobs:
           }
           """ % (package, package))
 
-          from xml.sax.saxutils import escape
-
           with open("app/src/main/res/values/strings.xml", "w") as f:
               f.write(
                   '<resources><string name="app_name">' +
@@ -131,8 +129,7 @@ jobs:
               <uses-permission android:name="android.permission.INTERNET"/>
               <application
                   android:label="@string/app_name"
-                  android:theme="@android:style/Theme.Material.Light.NoActionBar"
-                  android:usesCleartextTraffic="true">
+                  android:theme="@android:style/Theme.Material.Light.NoActionBar">
                   <activity
                       android:name=".MainActivity"
                       android:exported="true">
@@ -160,14 +157,12 @@ jobs:
               @Override
               protected void onCreate(Bundle savedInstanceState) {
                   super.onCreate(savedInstanceState);
-
                   web = new WebView(this);
                   web.getSettings().setJavaScriptEnabled(true);
                   web.getSettings().setDomStorageEnabled(true);
                   web.setWebViewClient(new WebViewClient());
-
                   setContentView(web);
-                  web.loadUrl(getString(com.example.placeholder.R.string.website_url));
+                  web.loadUrl(getString(PACKAGE_NAME.R.string.website_url));
               }
 
               @Override
@@ -182,10 +177,6 @@ jobs:
           """
 
           java = java.replace("PACKAGE_NAME", package)
-          java = java.replace(
-              "com.example.placeholder.R",
-              package + ".R"
-          )
 
           with open(java_path + "/MainActivity.java", "w") as f:
               f.write(java)
