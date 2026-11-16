@@ -8,105 +8,59 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:Arial,sans-serif;
-  background:radial-gradient(circle at top,#25265b,#0b1020 55%,#070912);
-  color:#fff;min-height:100vh;padding:20px 12px;
-}
+body{font-family:Arial,sans-serif;background:radial-gradient(circle at top,#25265b,#0b1020 55%,#070912);color:#fff;min-height:100vh;padding:20px 12px}
 .container{max-width:540px;margin:auto}
 .header{text-align:center;padding:25px 10px}
-.logo{
-  width:68px;height:68px;margin:auto auto 14px;
-  display:grid;place-items:center;border-radius:22px;
-  background:linear-gradient(135deg,#7c5cff,#00d4ff);
-  font-size:30px;font-weight:bold;
-  box-shadow:0 10px 35px #6655ff55;
-}
+.logo{width:68px;height:68px;margin:auto auto 14px;display:grid;place-items:center;border-radius:22px;background:linear-gradient(135deg,#7c5cff,#00d4ff);font-size:30px;font-weight:bold;box-shadow:0 10px 35px #6655ff55}
 h1{font-size:27px;letter-spacing:.5px}
 .header p{color:#aeb7d2;margin-top:9px;font-size:13px}
-.card{
-  background:rgba(255,255,255,.065);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:22px;padding:21px;
-  backdrop-filter:blur(18px);
-  box-shadow:0 15px 45px #0005;
-}
-.section-title{
-  font-size:15px;color:#a99aff;
-  margin:19px 0 13px;font-weight:bold;
-}
+.card{background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:21px;backdrop-filter:blur(18px);box-shadow:0 15px 45px #0005}
+.section-title{font-size:15px;color:#a99aff;margin:19px 0 13px;font-weight:bold}
 .section-title:first-child{margin-top:0}
 .field{margin-bottom:14px}
 label{display:block;font-size:13px;color:#c9d0e7;margin-bottom:7px}
-input[type=text],input[type=url],input[type=number]{
-  width:100%;padding:14px 13px;border-radius:12px;
-  background:#11182b;border:1px solid #303b59;
-  color:white;outline:none;font-size:14px;
-}
+input[type=text],input[type=url],input[type=number]{width:100%;padding:14px 13px;border-radius:12px;background:#11182b;border:1px solid #303b59;color:white;outline:none;font-size:14px}
 input:focus{border-color:#8a70ff;box-shadow:0 0 0 2px #8a70ff22}
 input::placeholder{color:#73809e}
-.logo-upload{
-  border:1px dashed #7166b9;border-radius:15px;
-  padding:18px;text-align:center;background:#171b34;
-}
+.logo-upload{border:1px dashed #7166b9;border-radius:15px;padding:18px;text-align:center;background:#171b34}
 .logo-upload input{max-width:100%;margin-top:12px;color:#bfc8df}
-.preview{
-  width:100px;height:100px;object-fit:cover;
-  border-radius:22px;margin:13px auto 0;display:none;
-  border:2px solid #8c7aff;
-}
+.preview{width:100px;height:100px;object-fit:contain;border-radius:15px;margin:13px auto 0;display:none;border:2px solid #8c7aff;background:repeating-conic-gradient(#333 0% 25%,#555 0% 50%) 50%/16px 16px}
 .permissions{display:flex;gap:10px;flex-wrap:wrap}
-.permission{
-  flex:1;min-width:130px;padding:14px;
-  background:#151c32;border:1px solid #303b59;
-  border-radius:13px;font-size:13px;
-}
+.permission{flex:1;min-width:130px;padding:14px;background:#151c32;border:1px solid #303b59;border-radius:13px;font-size:13px}
 .permission input{accent-color:#8a70ff;margin-right:7px}
 .color-row{display:flex;align-items:center;gap:13px}
-input[type=color]{
-  width:55px;height:43px;border:0;background:none;
-  cursor:pointer;
-}
+input[type=color]{width:55px;height:43px;border:0;background:none;cursor:pointer}
 .color-value{font-size:13px;color:#cbd2e7}
-button{
-  width:100%;border:0;border-radius:14px;
-  padding:16px;font-size:15px;font-weight:bold;
-  cursor:pointer;color:white;
-  background:linear-gradient(100deg,#7655ff,#00aeea);
-  box-shadow:0 8px 25px #6355ff40;
-}
+button{width:100%;border:0;border-radius:14px;padding:16px;font-size:15px;font-weight:bold;cursor:pointer;color:white;background:linear-gradient(100deg,#7655ff,#00aeea);box-shadow:0 8px 25px #6355ff40}
 button:disabled{opacity:.5;cursor:not-allowed}
 .build-btn{margin-top:20px}
-.status-box{
-  display:none;margin-top:20px;padding:17px;
-  border-radius:14px;background:#11182b;
-  border:1px solid #303b59;
-}
+.status-box{display:none;margin-top:20px;padding:17px;border-radius:14px;background:#11182b;border:1px solid #303b59}
 .status-text{text-align:center;font-size:14px;margin-bottom:13px}
 .progress-bg{height:9px;background:#303751;border-radius:20px;overflow:hidden}
-.progress{
-  width:0;height:100%;border-radius:20px;
-  background:linear-gradient(90deg,#795cff,#00d4ff);
-  transition:width .5s;
-}
+.progress{width:0;height:100%;border-radius:20px;background:linear-gradient(90deg,#795cff,#00d4ff);transition:width .5s}
 .percent{text-align:center;font-size:12px;color:#aab4d0;margin-top:8px}
-.download-btn{
-  display:none;margin-top:15px;
-  background:linear-gradient(100deg,#00b879,#00a7c9);
-}
-.message{
-  display:none;margin-top:14px;padding:12px;
-  border-radius:10px;font-size:13px;line-height:1.6;
-  background:#29203b;color:#ffd5e1;word-break:break-word;
-}
+.download-btn{display:none;margin-top:15px;background:linear-gradient(100deg,#00b879,#00a7c9)}
+.message{display:none;margin-top:14px;padding:12px;border-radius:10px;font-size:13px;line-height:1.6;background:#29203b;color:#ffd5e1;word-break:break-word}
 .footer{text-align:center;color:#727e9e;font-size:11px;margin:20px 0}
 .small{font-size:11px;color:#8995b2;margin-top:7px;line-height:1.5}
+
+/* Logo crop editor */
+.crop-modal{display:none;position:fixed;inset:0;z-index:999;background:#050713ee;align-items:center;justify-content:center;padding:16px}
+.crop-panel{width:100%;max-width:390px;background:#151b31;border:1px solid #45416e;border-radius:20px;padding:20px;box-shadow:0 15px 60px #000a}
+.crop-panel h2{text-align:center;font-size:20px;margin-bottom:8px}
+.crop-help{text-align:center;color:#aeb7d2;font-size:12px;line-height:1.5;margin-bottom:15px}
+.crop-canvas-wrap{width:280px;height:280px;max-width:100%;margin:auto;overflow:hidden;border-radius:12px;border:2px solid #8b79ff;background-color:#444;background-image:linear-gradient(45deg,#555 25%,transparent 25%),linear-gradient(-45deg,#555 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#555 75%),linear-gradient(-45deg,transparent 75%,#555 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}
+#cropCanvas{width:100%;height:100%;display:block;touch-action:none;cursor:move}
+.zoom-label{display:flex;justify-content:space-between;color:#cbd2e7;font-size:12px;margin:17px 0 8px}
+#zoomSlider{width:100%;accent-color:#8a70ff}
+.crop-actions{display:flex;gap:10px;margin-top:18px}
+.crop-actions button{flex:1;padding:13px;font-size:13px}
+.cancel-crop{background:#343b55;box-shadow:none}
 </style>
 </head>
 
 <body>
 <div class="container">
-
   <div class="header">
     <div class="logo">APK</div>
     <h1>APK Builder Pro</h1>
@@ -114,7 +68,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
   </div>
 
   <div class="card">
-
     <div class="section-title">01 · App Information</div>
 
     <div class="field">
@@ -151,55 +104,64 @@ button:disabled{opacity:.5;cursor:not-allowed}
       <input id="logo" type="file" accept="image/png,image/jpeg,image/webp">
       <img id="preview" class="preview" alt="Logo Preview">
       <div class="small">PNG, JPG অথবা WebP · সর্বোচ্চ 2 MB</div>
+      <div class="small">ছবি নির্বাচন করার পর Crop করে লোগো ঠিক করুন।</div>
     </div>
 
     <div class="section-title">04 · Permissions</div>
 
     <div class="permissions">
       <label class="permission">
-        <input type="checkbox" checked disabled>
-        Internet
+        <input type="checkbox" checked disabled> Internet
       </label>
-
       <label class="permission">
-        <input id="microphone" type="checkbox">
-        Microphone
+        <input id="microphone" type="checkbox"> Microphone
       </label>
     </div>
 
     <div class="small">Internet Permission সবসময় চালু থাকবে। Microphone প্রয়োজন হলে নির্বাচন করুন।</div>
 
     <div class="section-title">05 · Background Color</div>
-
     <div class="color-row">
       <input id="bgColor" type="color" value="#ffffff">
       <span id="colorValue" class="color-value">#FFFFFF</span>
     </div>
 
-    <button id="buildBtn" class="build-btn" onclick="startBuild()">
-      BUILD APK
-    </button>
+    <button id="buildBtn" class="build-btn" onclick="startBuild()">BUILD APK</button>
 
     <div id="statusBox" class="status-box">
       <div id="statusText" class="status-text">Preparing build...</div>
-      <div class="progress-bg">
-        <div id="progress" class="progress"></div>
-      </div>
+      <div class="progress-bg"><div id="progress" class="progress"></div></div>
       <div id="percent" class="percent">0%</div>
     </div>
 
-    <button id="downloadBtn" class="download-btn" onclick="downloadZip()">
-      DOWNLOAD APK ZIP
-    </button>
-
+    <button id="downloadBtn" class="download-btn" onclick="downloadZip()">DOWNLOAD APK ZIP</button>
     <div id="message" class="message"></div>
-
   </div>
 
-  <div class="footer">
-    APK BUILDER PRO · Powered by GitHub Actions
-  </div>
+  <div class="footer">APK BUILDER PRO · Powered by GitHub Actions</div>
+</div>
 
+<!-- Crop popup -->
+<div id="cropModal" class="crop-modal">
+  <div class="crop-panel">
+    <h2>লোগো ঠিক করুন</h2>
+    <div class="crop-help">ছবিটি আঙুল দিয়ে সরান এবং Zoom কমিয়ে বা বাড়িয়ে পুরো লোগো ঠিক করুন। বাইরের স্বচ্ছ অংশে কোনো রং থাকবে না।</div>
+
+    <div class="crop-canvas-wrap">
+      <canvas id="cropCanvas" width="512" height="512"></canvas>
+    </div>
+
+    <div class="zoom-label">
+      <span>Zoom Out</span>
+      <span>Zoom In</span>
+    </div>
+    <input id="zoomSlider" type="range" min="0.5" max="3" step="0.01" value="1">
+
+    <div class="crop-actions">
+      <button class="cancel-crop" onclick="cancelCrop()">বাতিল</button>
+      <button onclick="saveCrop()">লোগো সেভ করুন</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -212,33 +174,161 @@ let checking = false;
 
 const $ = id => document.getElementById(id);
 
+let cropImage = null;
+let cropFile = null;
+let croppedLogo = null;
+let imageX = 0;
+let imageY = 0;
+let baseScale = 1;
+let zoom = 1;
+let dragging = false;
+let lastPointerX = 0;
+let lastPointerY = 0;
+let oldLogo = null;
+let previewUrl = null;
+
+const canvas = $("cropCanvas");
+const ctx = canvas.getContext("2d");
+
 $("logo").addEventListener("change", function(){
   const file = this.files[0];
-  const preview = $("preview");
-
-  if(!file){
-    preview.style.display = "none";
-    return;
-  }
+  if(!file) return;
 
   if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
     showMessage("শুধু PNG, JPG অথবা WebP ছবি নির্বাচন করুন।");
     this.value = "";
-    preview.style.display = "none";
     return;
   }
 
   if(file.size > 2*1024*1024){
     showMessage("Logo সর্বোচ্চ 2 MB হতে পারবে।");
     this.value = "";
-    preview.style.display = "none";
     return;
   }
 
-  preview.src = URL.createObjectURL(file);
-  preview.style.display = "block";
   hideMessage();
+  oldLogo = croppedLogo;
+
+  const image = new Image();
+  const tempUrl = URL.createObjectURL(file);
+
+  image.onload = function(){
+    cropImage = image;
+    cropFile = file;
+
+    baseScale = Math.min(
+      canvas.width / image.naturalWidth,
+      canvas.height / image.naturalHeight
+    );
+
+    zoom = 1;
+    $("zoomSlider").value = 1;
+
+    imageX = (canvas.width - image.naturalWidth * baseScale) / 2;
+    imageY = (canvas.height - image.naturalHeight * baseScale) / 2;
+
+    drawCrop();
+    $("cropModal").style.display = "flex";
+    URL.revokeObjectURL(tempUrl);
+  };
+
+  image.onerror = function(){
+    URL.revokeObjectURL(tempUrl);
+    showMessage("ছবিটি খোলা যাচ্ছে না। অন্য ছবি নির্বাচন করুন।");
+    $("logo").value = "";
+  };
+
+  image.src = tempUrl;
 });
+
+function drawCrop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  if(!cropImage) return;
+
+  const scale = baseScale * zoom;
+  const width = cropImage.naturalWidth * scale;
+  const height = cropImage.naturalHeight * scale;
+
+  ctx.drawImage(cropImage,imageX,imageY,width,height);
+}
+
+$("zoomSlider").addEventListener("input",function(){
+  const newZoom = Number(this.value);
+  const centerX = canvas.width/2;
+  const centerY = canvas.height/2;
+
+  const oldScale = baseScale * zoom;
+  const newScale = baseScale * newZoom;
+
+  imageX = centerX - (centerX-imageX) * (newScale/oldScale);
+  imageY = centerY - (centerY-imageY) * (newScale/oldScale);
+
+  zoom = newZoom;
+  drawCrop();
+});
+
+canvas.addEventListener("pointerdown",function(e){
+  dragging = true;
+  canvas.setPointerCapture(e.pointerId);
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+});
+
+canvas.addEventListener("pointermove",function(e){
+  if(!dragging) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width/rect.width;
+  const scaleY = canvas.height/rect.height;
+
+  imageX += (e.clientX-lastPointerX)*scaleX;
+  imageY += (e.clientY-lastPointerY)*scaleY;
+
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+
+  drawCrop();
+});
+
+canvas.addEventListener("pointerup",()=>dragging=false);
+canvas.addEventListener("pointercancel",()=>dragging=false);
+
+function cancelCrop(){
+  $("cropModal").style.display = "none";
+  $("logo").value = "";
+
+  if(!oldLogo){
+    croppedLogo = null;
+    $("preview").style.display = "none";
+  }else{
+    croppedLogo = oldLogo;
+  }
+}
+
+function saveCrop(){
+  if(!cropImage) return;
+
+  canvas.toBlob(function(blob){
+    if(!blob){
+      showMessage("লোগো তৈরি করা যায়নি। আবার চেষ্টা করুন।");
+      return;
+    }
+
+    croppedLogo = new File([blob],"app-logo.png",{
+      type:"image/png"
+    });
+
+    if(previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = URL.createObjectURL(blob);
+
+    $("preview").src = previewUrl;
+    $("preview").style.display = "block";
+    $("cropModal").style.display = "none";
+
+    hideMessage();
+  },"image/png");
+}
 
 $("bgColor").addEventListener("input",function(){
   $("colorValue").textContent = this.value.toUpperCase();
@@ -260,7 +350,6 @@ function setProgress(value,text){
 }
 
 async function startBuild(){
-
   if(checking) return;
 
   const appName = $("appName").value.trim();
@@ -289,6 +378,11 @@ async function startBuild(){
     return;
   }
 
+  if($("logo").files.length && !croppedLogo){
+    showMessage("লোগোটি Crop করে সেভ করুন।");
+    return;
+  }
+
   const form = new FormData();
   form.append("appName",appName);
   form.append("packageName",packageName);
@@ -299,11 +393,11 @@ async function startBuild(){
 
   const permissions = ["INTERNET"];
   if($("microphone").checked) permissions.push("RECORD_AUDIO");
-
   form.append("permissions",permissions.join(","));
 
-  const logo = $("logo").files[0];
-  if(logo) form.append("logo",logo);
+  if(croppedLogo){
+    form.append("logo",croppedLogo,"app-logo.png");
+  }
 
   checking = true;
   completed = false;
@@ -326,9 +420,7 @@ async function startBuild(){
     if(!response.ok) throw new Error(result.error || "Build শুরু করা যায়নি।");
 
     currentRunId = result.runId;
-
     setProgress(10,"Build started. Waiting for GitHub...");
-
     await checkStatus();
 
   }catch(error){
@@ -339,11 +431,9 @@ async function startBuild(){
 }
 
 async function checkStatus(){
-
   let attempts = 0;
 
   while(attempts < 90){
-
     attempts++;
 
     try{
@@ -353,7 +443,6 @@ async function checkStatus(){
       );
 
       const data = await response.json();
-
       if(!response.ok) throw new Error(data.error || "Status check failed");
 
       if(data.status === "completed"){
@@ -393,7 +482,6 @@ async function checkStatus(){
 }
 
 async function downloadZip(){
-
   if(!currentRunId || !completed){
     showMessage("APK Build সম্পন্ন হয়নি।");
     return;
@@ -415,7 +503,6 @@ async function downloadZip(){
     }
 
     const blob = await response.blob();
-
     const downloadUrl = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = downloadUrl;
@@ -425,7 +512,6 @@ async function downloadZip(){
     a.remove();
 
     setTimeout(()=>URL.revokeObjectURL(downloadUrl),60000);
-
     button.textContent = "DOWNLOAD AGAIN";
 
   }catch(error){
@@ -437,4 +523,4 @@ async function downloadZip(){
 }
 </script>
 </body>
-</html>
+  </html>
